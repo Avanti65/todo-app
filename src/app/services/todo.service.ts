@@ -37,7 +37,17 @@ export class TodoService {
     // console.log(this.todos);
   }
 
-  updateTask() {}
+  updateTask(updatedTodo: Todo) {
+    const existingTodoIndex = this.todos.findIndex((todo) => todo.id === updatedTodo.id);
+
+    if (existingTodoIndex == -1) {
+      return;
+    }
+
+    this.todos[existingTodoIndex] = updatedTodo;
+
+    this.saveTasksToStorage();
+  }
 
   deleteTask(todoId: string) {
     this.todos = this.todos.filter((todo) => todo.id !== todoId);

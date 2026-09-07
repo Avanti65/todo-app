@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { TodoStatus } from '../../../models/todo-status.enum';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TodoService } from '../../../services/todo.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Todo } from '../../../models/todo.model';
 
 @Component({
   selector: 'app-todo-form',
@@ -13,26 +14,71 @@ import { Router } from '@angular/router';
 export class TodoForm {
   readonly todoStatuses = Object.values(TodoStatus);
   readonly todoForm;
+  readonly todoEditId;
 
   constructor(
     private readonly todoService: TodoService,
     private readonly router: Router,
+    private readonly route: ActivatedRoute,
   ) {
+    this.todoEditId = this.route.snapshot.paramMap.get('id');
+
     this.todoForm = new FormGroup({
       title: new FormControl('', { nonNullable: true }),
       description: new FormControl('', { nonNullable: true }),
       status: new FormControl(TodoStatus.New, { nonNullable: true }),
     });
+
+    //if edit then load data to form
+    this.loadEditableTodo();
   }
 
-  onSubmit() {
-    //save todo
+  onSubmit(): void {
     const { title, description, status } = this.todoForm.getRawValue();
-    this.todoService.addTask(title, description, status);
-    this.router.navigate(['']);
+
+    //editId available then edit, else add
+    if (this.todoEditId) {
+      const existingTodo = this.todoService.getTaskById(this.todoEditId);
+
+      if (!existingTodo) {
+        this.router.navigate(['/todos']);
+        return;
+      }
+
+      const updatedTodo: Todo = {
+        ...existingTodo,
+        title: title.trim(),
+        description: description.trim(),
+        status: status,
+      };
+
+      this.todoService.updateTask(updatedTodo);
+    } else {
+      this.todoService.addTask(title, description, status);
+    }
+    this.router.navigate(['/todos']);
   }
 
-  onCancel() {
-    this.router.navigate(['']);
+  onCancel(): void {
+    this.router.navigate(['/todos']);
+  }
+
+  loadEditableTodo(): void {
+    if (!this.todoEditId) {
+      return;
+    }
+
+    const todo = this.todoService.getTaskById(this.todoEditId);
+
+    if (!todo) {
+      this.router.navigate(['/todos']);
+      return;
+    }
+
+    this.todoForm.patchValue({
+      title: todo.title,
+      description: todo.description,
+      status: todo.status,
+    });
   }
 }

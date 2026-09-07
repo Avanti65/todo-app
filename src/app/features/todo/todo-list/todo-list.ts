@@ -21,14 +21,15 @@ export class TodoList {
   }
 
   onAddNewTask() {
-    this.router.navigate(['new']);
+    this.router.navigate(['/todos/new']);
   }
 
-  onEdit(task: Todo) {}
+  onEdit(task: Todo) {
+    this.router.navigate(['/todos', task.id, 'edit']);
+  }
 
   onDelete(todoId: string) {
     this.todoService.deleteTask(todoId);
     this.todos = this.todoService.getTasks();
-    console.log('on deleted todos', this.todos);
   }
 }
