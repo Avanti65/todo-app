@@ -2,7 +2,7 @@
   <h1>{{ todo.title }}</h1>
   <p>{{ todo.description }}</p>
   <label>status</label>
-  <select>
+  <select (change)="onStatusChange($event)">
     @for (status of todoStatuses; track status) {
       <option [value]="status" [selected]="status === todo.status">{{ status }}</option>
     }

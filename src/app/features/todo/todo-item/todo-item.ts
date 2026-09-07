@@ -13,6 +13,7 @@ export class TodoItem {
   @Output() edit = new EventEmitter<Todo>();
   @Output() delete = new EventEmitter<string>(); //id of todo
   @Output() complete = new EventEmitter<Todo>();
+  @Output() statusChange = new EventEmitter<Todo>();
 
   readonly todoStatuses = Object.values(TodoStatus);
 
@@ -26,5 +27,14 @@ export class TodoItem {
 
   onComplete() {
     this.complete.emit(this.todo);
+  }
+
+  onStatusChange(event: Event) {
+    const status = (event.target as HTMLSelectElement).value as TodoStatus;
+
+    this.statusChange.emit({
+      ...this.todo,
+      status: status,
+    });
   }
 }

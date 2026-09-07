@@ -25,8 +25,8 @@ export class TodoList {
     this.router.navigate(['/todos/new']);
   }
 
-  onEdit(task: Todo) {
-    this.router.navigate(['/todos', task.id, 'edit']);
+  onEdit(todo: Todo) {
+    this.router.navigate(['/todos', todo.id, 'edit']);
   }
 
   onDelete(todoId: string) {
@@ -41,6 +41,11 @@ export class TodoList {
     };
 
     this.todoService.updateTask(updatedTodo);
+    this.todos = this.todoService.getTasks();
+  }
+
+  onStatusChange(todo: Todo) {
+    this.todoService.updateTask(todo);
     this.todos = this.todoService.getTasks();
   }
 }
