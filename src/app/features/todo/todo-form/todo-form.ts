@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { TodoStatus } from '../../../models/todo-status.enum';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TodoService } from '../../../services/todo.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Todo } from '../../../models/todo.model';
@@ -24,16 +24,22 @@ export class TodoForm {
     this.todoEditId = this.route.snapshot.paramMap.get('id');
 
     this.todoForm = new FormGroup({
-      title: new FormControl('', { nonNullable: true }),
-      description: new FormControl('', { nonNullable: true }),
+      title: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+      description: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
       status: new FormControl(TodoStatus.New, { nonNullable: true }),
     });
 
-    //if edit then load data to form
+    //if editmode then load data to form
     this.loadEditableTodo();
   }
 
   onSubmit(): void {
+    //form validation
+
+    if (this.todoForm.invalid) {
+      this.todoForm.markAllAsTouched();
+      return;
+    }
     const { title, description, status } = this.todoForm.getRawValue();
 
     //editId available then edit, else add
