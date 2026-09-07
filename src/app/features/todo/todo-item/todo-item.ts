@@ -22,7 +22,10 @@ export class TodoItem {
   }
 
   onDelete() {
-    this.delete.emit(this.todo.id);
+    const deleteConfirm = confirm(`Are you sure you want to delete ${this.todo.title}?`);
+    if (deleteConfirm) {
+      this.delete.emit(this.todo.id);
+    }
   }
 
   onComplete() {
