@@ -3,7 +3,12 @@
   <p>No todos Found</p>
 } @else {
   @for (todo of todos; track todo.id) {
-    <app-todo-item [todo]="todo" (edit)="onEdit($event)" (delete)="onDelete($event)">
+    <app-todo-item
+      [todo]="todo"
+      (edit)="onEdit($event)"
+      (delete)="onDelete($event)"
+      (complete)="onComplete($event)"
+    >
     </app-todo-item>
   }
 }
