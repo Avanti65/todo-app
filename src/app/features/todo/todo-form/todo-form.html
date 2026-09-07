@@ -1,0 +1,14 @@
+<label>Title</label>
+<input id="title" type="text" placeholder="Add todo title here" />
+
+<label>Description</label>
+<input id="desc" type="text" placeholder="Add todo description here" />
+
+<label>Status</label>
+<select id="staus">
+  @for (status of todoStatuses; track status) {
+    <option>{{ status }}</option>
+  }
+</select>
+
+<button type="button">Add</button>
