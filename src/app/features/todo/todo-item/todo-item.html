@@ -1,1 +1,12 @@
-<h1>Todo card</h1>
+<div>
+  <h1>{{ todo.title }}</h1>
+  <p>{{ todo.description }}</p>
+  <label>status</label>
+  <select>
+    @for (status of todoStatuses; track status) {
+      <option [value]="status" [selected]="status === todo.status">{{ status }}</option>
+    }
+  </select>
+  <button type="button" (click)="onEdit()">Edit</button>
+  <button type="button" (click)="onDelete()">Delete</button>
+</div>

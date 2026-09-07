@@ -1,1 +1,9 @@
-<p>todo-list works!</p>
+<button type="button" (click)="onAddNewTask()">Add Task</button>
+@if (todos.length == 0) {
+  <p>No todos Found</p>
+} @else {
+  @for (todo of todos; track todo.id) {
+    <app-todo-item [todo]="todo" (edit)="onEdit($event)" (delete)="onDelete($event)">
+    </app-todo-item>
+  }
+}

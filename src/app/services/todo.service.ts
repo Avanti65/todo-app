@@ -9,8 +9,19 @@ export class TodoService {
   // methods to be implemented
 
   private todos: Todo[] = [];
+  private todoStorageKey = 'todos_store';
 
-  getTask() {}
+  constructor() {
+    this.loadTasksFromStorage();
+  }
+
+  getTasks(): Todo[] {
+    return this.todos;
+  }
+
+  getTaskById(id: string): Todo | undefined {
+    return this.todos.find((task) => task.id === id);
+  }
 
   addTask(title: string, description: string, status: TodoStatus) {
     const newTodo: Todo = {
@@ -22,10 +33,27 @@ export class TodoService {
     };
 
     this.todos.push(newTodo);
-    console.log(this.todos);
+    this.saveTasksToStorage();
+    // console.log(this.todos);
   }
 
   updateTask() {}
 
   deleteTask() {}
+
+  saveTasksToStorage() {
+    localStorage.setItem(this.todoStorageKey, JSON.stringify(this.todos));
+  }
+
+  loadTasksFromStorage() {
+    const localTasks = localStorage.getItem(this.todoStorageKey);
+    if (!localTasks) {
+      return;
+    }
+    try {
+      this.todos = JSON.parse(localTasks) as Todo[];
+    } catch {
+      this.todos = [];
+    }
+  }
 }
