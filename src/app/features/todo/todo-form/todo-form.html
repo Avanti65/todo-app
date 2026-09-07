@@ -1,14 +1,21 @@
-<label>Title</label>
-<input id="title" type="text" placeholder="Add todo title here" />
+<form [formGroup]="todoForm" (ngSubmit)="onSubmit()">
+  <label>Title</label>
+  <input id="title" type="text" formControlName="title" placeholder="Add todo title here" />
 
-<label>Description</label>
-<input id="desc" type="text" placeholder="Add todo description here" />
+  <label>Description</label>
+  <input
+    id="desc"
+    type="text"
+    formControlName="description"
+    placeholder="Add todo description here"
+  />
 
-<label>Status</label>
-<select id="staus">
-  @for (status of todoStatuses; track status) {
-    <option>{{ status }}</option>
-  }
-</select>
+  <label>Status</label>
+  <select id="staus" formControlName="status">
+    @for (status of todoStatuses; track status) {
+      <option [value]="status">{{ status }}</option>
+    }
+  </select>
 
-<button type="button">Add</button>
+  <button type="submit">Add</button>
+</form>
