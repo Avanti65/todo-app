@@ -1,0 +1,25 @@
+.todo-status-new {
+  border-left: 5px solid #0d6efd;
+}
+
+.todo-status-in-progress {
+  border-left: 5px solid #ffc107;
+}
+
+.todo-status-rejected {
+  border-left: 5px solid #dc3545;
+}
+
+.todo-status-verified {
+  border-left: 5px solid #022716;
+}
+
+.todo-status-completed {
+  border-left: 5px solid #198754;
+}
+
+.todo-status-completed .card-title,
+.todo-status-completed .card-text {
+  text-decoration: line-through;
+  opacity: 0.7;
+}

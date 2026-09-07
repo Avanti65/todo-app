@@ -8,7 +8,7 @@
   } @else {
     <div class="row">
       @for (todo of todos; track todo.id) {
-        <div class="col-12 col-md-6 col-lg-4">
+        <div class="col-12 col-md-6 col-lg-4 py-2">
           <app-todo-item
             [todo]="todo"
             (edit)="onEdit($event)"

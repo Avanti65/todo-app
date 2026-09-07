@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TodoStatus } from '../../../models/todo-status.enum';
 import { Todo } from '../../../models/todo.model';
+import { TodoStatusDirective } from '../../../directives/todo-status.directive';
 
 @Component({
   selector: 'app-todo-item',
-  imports: [],
+  imports: [TodoStatusDirective],
   templateUrl: './todo-item.html',
   styleUrl: './todo-item.css',
 })
