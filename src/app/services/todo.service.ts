@@ -39,7 +39,10 @@ export class TodoService {
 
   updateTask() {}
 
-  deleteTask() {}
+  deleteTask(todoId: string) {
+    this.todos = this.todos.filter((todo) => todo.id !== todoId);
+    this.saveTasksToStorage();
+  }
 
   saveTasksToStorage() {
     localStorage.setItem(this.todoStorageKey, JSON.stringify(this.todos));

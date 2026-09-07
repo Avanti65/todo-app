@@ -11,7 +11,7 @@ import { Todo } from '../../../models/todo.model';
 export class TodoItem {
   @Input() todo!: Todo;
   @Output() edit = new EventEmitter<Todo>();
-  @Output() delete = new EventEmitter<Todo>();
+  @Output() delete = new EventEmitter<string>(); //id of todo
 
   readonly todoStatuses = Object.values(TodoStatus);
 
@@ -20,6 +20,6 @@ export class TodoItem {
   }
 
   onDelete() {
-    this.delete.emit(this.todo);
+    this.delete.emit(this.todo.id);
   }
 }

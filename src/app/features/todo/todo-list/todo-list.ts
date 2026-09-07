@@ -26,5 +26,9 @@ export class TodoList {
 
   onEdit(task: Todo) {}
 
-  onDelete(task: Todo) {}
+  onDelete(todoId: string) {
+    this.todoService.deleteTask(todoId);
+    this.todos = this.todoService.getTasks();
+    console.log('on deleted todos', this.todos);
+  }
 }
