@@ -9,7 +9,7 @@ export class TodoService {
   // methods to be implemented
 
   private todos: Todo[] = [];
-  private todoStorageKey = 'todos_store';
+  private readonly todoStorageKey = 'todos_store';
 
   constructor() {
     this.loadTasksFromStorage();
